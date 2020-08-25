@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<stack>
+#include<queue>
 #include "../solution/Solution.h"
 using namespace std;
 
@@ -163,4 +164,113 @@ vector<int> Solution::postOrder1(TreeNode* root, vector<int>& ret)
     return ret;
 }
 
+void dfs(TreeNode* root, vector<int>& ret)
+{
+    if (root == nullptr) {
+        return;
+    }
+    ret.push_back(root->val);
+    dfs(root->left, ret);
+    dfs(root->right, ret);
+}
+
+vector<int> Solution::dfsOrder(TreeNode* root)
+{
+    vector<int> ret;
+    dfs(root, ret);
+    return ret;
+}
+
+vector<int> Solution::bfsOrder(TreeNode* root)
+{
+    vector<int> ret;
+    queue<TreeNode *> qu;
+    qu.push(root);
+    while(!qu.empty()) {
+        int len = qu.size();
+        for (int i = 0; i < len; i++) {
+            TreeNode* temp = qu.front();
+            ret.push_back(temp->val);
+            qu.pop();
+            if (temp->left != nullptr) {
+                qu.push(temp->left);
+            }
+            if (temp->right != nullptr) {
+                qu.push(temp->right);
+            }
+        }
+    }
+    return ret;
+}
+
+vector<int> divideAndConquer(TreeNode* root) 
+{
+    vector<int> ret;
+    if (root == nullptr) {
+        return ret;
+    }
+
+    vector<int> left = divideAndConquer(root->left);
+    vector<int> right = divideAndConquer(root->right);
+
+    ret.push_back(root->val);
+    ret.insert(ret.end(), left.begin(), left.end());
+    ret.insert(ret.end(), right.begin(), right.end());
+
+    return ret;
+}
+
+vector<int> Solution::preOrderTraversal(TreeNode* root)
+{
+    vector<int> result = divideAndConquer(root);
+    return result;
+}
+
+void merge(vector<int>& a, int p, int q, int r) 
+{
+    int n1 = q - p + 1;
+    int n2 = r - q;
+    int i, j, k;
+    vector<int> left;
+    vector<int> right;
+
+    for (i = 0, k = p; i < n1; i++, k++) {
+        left.push_back(a[k]);
+    }
+
+    for (j = 0, k = q + 1; j < n2; j++, k++) {
+        right.push_back(a[k]);
+    }
+
+    for (i = 0, j = 0, k = p; i < n1 && j < n2; k++) {
+        if (left[i] > right[j]) {
+            a[k] = right[j];
+            j++;
+        } else {
+            a[k] = left[i];
+            i++;
+        }
+    }
+
+    while (i < n1) {
+        a[k] = left[i];
+        k++;
+        i++;
+    }
+    while (j < n2) {
+        a[k] = right[j];
+        k++;
+        j++;
+    }
+}
+
+void Solution::mergeSort(vector<int>& a, int p, int r) 
+{
+    if (p < r) {
+        int q = (p + r) / 2;
+        mergeSort(a, p, q);
+        mergeSort(a, q + 1, r);
+        merge(a, p, q, r);
+    }
+}
 

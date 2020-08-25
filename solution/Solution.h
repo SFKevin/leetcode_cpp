@@ -24,4 +24,10 @@ public:
     vector<int> inOrder1(TreeNode* root, vector<int>& ret);
     vector<int> postOrder1(TreeNode* root, vector<int>& ret);
 
+    vector<int> dfsOrder(TreeNode* root);
+    vector<int> bfsOrder(TreeNode* root);
+
+    vector<int> preOrderTraversal(TreeNode* root);
+
+    void mergeSort(vector<int>& a, int p, int r);
 };
