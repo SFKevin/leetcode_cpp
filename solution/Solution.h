@@ -30,4 +30,9 @@ public:
     vector<int> preOrderTraversal(TreeNode* root);
 
     void mergeSort(vector<int>& a, int p, int r);
+    void quickSort(vector<int>& a, int low, int high);
+    int maxDepth(TreeNode* root);
+    bool isBalanced(TreeNode* root);
+    int maxPathSum(TreeNode* root);
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q);
 };

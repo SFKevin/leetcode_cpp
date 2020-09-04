@@ -2,6 +2,7 @@
 #include<vector>
 #include<stack>
 #include<queue>
+#include<limits>
 #include "../solution/Solution.h"
 using namespace std;
 
@@ -274,3 +275,108 @@ void Solution::mergeSort(vector<int>& a, int p, int r)
     }
 }
 
+void Solution::quickSort(vector<int>& a, int low, int high)
+{
+    if (low > high) {
+        return;
+    }
+
+    int i = low; 
+    int j = high;
+    int index = a[i];
+    while (i < j) {
+        while (i < j && a[j] > index) {
+            j--;
+        }
+        if (i < j) {
+            a[i++] = a[j];
+        }
+
+        while (i < j && a[i] < index) {
+            i++;
+        }
+        if (i < j) {
+            a[j--] = a[i];
+        }
+    }
+    a[i] = index;
+    quickSort(a, low, i - 1);
+    quickSort(a, i + 1, high);
+}
+
+int Solution::maxDepth(TreeNode* root)
+{
+    if (root == nullptr) {
+        return 0;
+    }
+
+    int left = maxDepth(root->left);
+    int right = maxDepth(root->right);
+
+    if (left == -1 || right == -1 || left - right > 1 || right - left > 1) {
+        return -1;
+    }
+
+    return std::max(left, right) + 1;
+}
+
+bool Solution::isBalanced(TreeNode* root)
+{
+    if (maxDepth(root) == -1) {
+        return false;
+    }
+    return true;
+}
+
+int maxSum = std::numeric_limits<int>::min();
+int Solution::maxPathSum(TreeNode* root)
+{
+   maxGain(root);
+   return maxSum;
+}
+
+int maxGain(TreeNode* root)
+{
+    if (root == nullptr) {
+        return 0;
+    }
+
+    int left = maxGain(root->left);
+    int right = maxGain(root->right);
+
+    int left1 = std::max(left, 0);
+    int right1 = std::max(right, 0);
+    
+    int tempSum = root->val + left1 + right1;
+
+    maxSum = std::max(tempSum, maxSum);
+
+    return root->val + std::max(left1, right1);
+}
+
+TreeNode* Solution::lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q)
+{
+    if (root == nullptr) {
+        return root;
+    }
+
+    if (root == p || root == q) {
+        return root;
+    }
+
+    TreeNode* left = lowestCommonAncestor(root->left, p, q);
+    TreeNode* right = lowestCommonAncestor(root->right, p, q);
+
+    if (left != nullptr && right != nullptr) {
+        return root;
+    }
+    if (left != nullptr){
+        return left;
+    }
+
+    if (right != nullptr) {
+        return right;
+    }
+
+    return nullptr;
+}

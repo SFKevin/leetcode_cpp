@@ -32,7 +32,7 @@ int main(void)
     vector<int> array = {5, 8, 3, 2, 9};
     Solution* solution = new Solution;
 
-    solution->mergeSort(array, 0, array.size() - 1);
+    solution->quickSort(array, 0, array.size() - 1);
     for (int i = 0; i < array.size(); i++) {
         cout << array[i] << " ";
     }
