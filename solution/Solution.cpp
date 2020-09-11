@@ -380,3 +380,160 @@ TreeNode* Solution::lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* 
 
     return nullptr;
 }
+
+using namespace std;
+vector<vector<int>> levelOrder(TreeNode* root) 
+{
+    vector<vector<int>> result;
+    if (root == nullptr) {
+        return result;
+    }
+
+    queue<TreeNode*> qu;
+    qu.push(root);
+    while (!qu.empty()) {
+        int len = qu.size();
+        vector<int> tempVec;
+        tempVec.resize(len);
+        for (int i = 0; i < len; i++) {
+            TreeNode* temp = qu.front();
+            qu.pop();
+            tempVec[i] = temp->val;
+            if (temp->left != nullptr) {
+                qu.push(temp->left);
+            }
+            if (temp->right != nullptr) {
+                qu.push(temp->right);
+            }
+        }
+        result.push_back(tempVec);
+    }
+    return result;
+}
+
+vector<vector<int>> levelOrderBottom(TreeNode* root) 
+{
+    vector<vector<int>> result;
+    stack<vector<int>> temResult;
+    if(root == nullptr) {
+        return result;
+    }
+    queue<TreeNode*> qu;
+    qu.push(root);
+    while (!qu.empty()) {
+        int len = qu.size();
+        vector<int> tempVec;
+        for (int i = 0; i < len; i++) {
+            TreeNode* tempNode = qu.front();
+            qu.pop();
+            tempVec.push_back(tempNode->val);
+            if (tempNode->left != nullptr) {
+                qu.push(tempNode->left);
+            }
+            if (tempNode->right != nullptr) {
+                qu.push(tempNode->right);
+            }
+        }
+        temResult.push(tempVec);
+    }
+    while (!temResult.empty()) {
+        result.push_back(temResult.top());
+        temResult.pop();
+    }
+    return result;
+}
+
+vector<vector<int>> zigzagLevelOrder(TreeNode* root) 
+{
+    vector<vector<int>> result;
+    queue<TreeNode*> qu;
+    int level = 0;
+    if (root == nullptr) {
+        return result;
+    }
+    qu.push(root);
+    while(!qu.empty()) {
+        int len = qu.size();
+        vector<int> tempVec;
+        for (int i = 0; i < len; i++) {
+            TreeNode* tempNode = qu.front();
+            qu.pop();
+            if (level % 2 == 0) {
+                tempVec.push_back(tempNode->val);
+            } else {
+                 tempVec.insert(tempVec.begin(), tempNode->val);
+            }
+
+            TreeNode* left = tempNode->left;
+            if (left != nullptr) {
+                qu.push(left);
+            }
+            TreeNode* right = tempNode->right;
+            if (right != nullptr) {
+                qu.push(right);
+            }
+        }
+        result.push_back(tempVec);
+        level++;
+    }
+    return result;
+}
+
+bool Solution::isValidBST(TreeNode* root) 
+{
+    if (root == nullptr) {
+        return true;
+    }
+    stack<TreeNode*> st;
+    long flag = std::numeric_limits<long>::min();
+    while (root != nullptr || !st.empty()) {
+        while(root!= nullptr) {
+            st.push(root);
+            root = root->left;
+        }
+        TreeNode* temp = st.top();
+        st.pop();
+        if (temp->val <= flag) {
+            return false;
+        }
+        flag = temp->val;
+        root = temp->right;
+    }
+    return true;
+}
+
+bool helpBST(TreeNode* root, long lower, long upper) {
+    if (root == nullptr) {
+        return true;
+    }
+    if (root->val <= lower || root->val >= upper) {
+        return false;
+    }
+    return helpBST(root->left, lower, root->val) && helpBST(root->right, root->val, upper);
+}
+
+TreeNode* insertIntoBST(TreeNode* root, int val) 
+{
+    if (root == nullptr) {
+        return new TreeNode(val);
+    }
+    TreeNode* head = root;
+    while (root) {
+        if (val < root->val) {
+            if (root->left == nullptr) {
+                root->left = new TreeNode(val);
+                return head;
+            }else {
+                root = root->left;
+            }
+        } else {
+            if (root->right == nullptr) {
+                root->right = new TreeNode(val);
+                return head;
+            } else {
+                root = root->right;
+            }
+        }
+    }
+    return head;
+}

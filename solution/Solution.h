@@ -35,4 +35,8 @@ public:
     bool isBalanced(TreeNode* root);
     int maxPathSum(TreeNode* root);
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q);
+    vector<vector<int>> levelOrder(TreeNode* root);
+    vector<vector<int>> levelOrderBottom(TreeNode* root);
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root);
+    bool isValidBST(TreeNode* root);
 };
