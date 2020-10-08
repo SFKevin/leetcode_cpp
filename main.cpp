@@ -1,7 +1,7 @@
 
 #include<iostream>
 #include<vector>
-#include "./solution/Solution.h"
+#include "./solution/list_solution.h"
 using namespace std;
 
 // int main(void)
@@ -29,12 +29,17 @@ using namespace std;
 // }
 int main(void) 
 {
-    vector<int> array = {5, 8, 3, 2, 9};
-    Solution* solution = new Solution;
-
-    solution->quickSort(array, 0, array.size() - 1);
-    for (int i = 0; i < array.size(); i++) {
-        cout << array[i] << " ";
+    ListSolution* solution = new ListSolution;
+    ListNode* head = new ListNode(1);
+    head->next = new ListNode(4);
+    head->next->next = new ListNode(3);
+    head->next->next->next = new ListNode(2);
+    head->next->next->next->next = new ListNode(5);
+    head->next->next->next->next->next = new ListNode(2);
+    solution->partition(head, 3);
+    while (head != nullptr) {
+        cout << head->val << "\t";
+        head = head->next;
     }
 
     delete solution;

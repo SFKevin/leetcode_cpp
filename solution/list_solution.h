@@ -14,4 +14,7 @@ class ListSolution
     ListNode* deleteDuplicates(ListNode* head);
     ListNode* reverseList(ListNode* head);
     ListNode* reverseBetween(ListNode* head, int m, int n);
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2);
+    ListNode* partition(ListNode* head, int x);
+    ListNode* sortList(ListNode* head);
 };

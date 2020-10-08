@@ -328,212 +328,212 @@ bool Solution::isBalanced(TreeNode* root)
     return true;
 }
 
-int maxSum = std::numeric_limits<int>::min();
-int Solution::maxPathSum(TreeNode* root)
-{
-   maxGain(root);
-   return maxSum;
-}
+// int maxSum = std::numeric_limits<int>::min();
+// int Solution::maxPathSum(TreeNode* root)
+// {
+//    maxGain(root);
+//    return maxSum;
+// }
 
-int maxGain(TreeNode* root)
-{
-    if (root == nullptr) {
-        return 0;
-    }
+// int maxGain(TreeNode* root)
+// {
+//     if (root == nullptr) {
+//         return 0;
+//     }
 
-    int left = maxGain(root->left);
-    int right = maxGain(root->right);
+//     int left = maxGain(root->left);
+//     int right = maxGain(root->right);
 
-    int left1 = std::max(left, 0);
-    int right1 = std::max(right, 0);
+//     int left1 = std::max(left, 0);
+//     int right1 = std::max(right, 0);
     
-    int tempSum = root->val + left1 + right1;
+//     int tempSum = root->val + left1 + right1;
 
-    maxSum = std::max(tempSum, maxSum);
+//     maxSum = std::max(tempSum, maxSum);
 
-    return root->val + std::max(left1, right1);
-}
+//     return root->val + std::max(left1, right1);
+// }
 
-TreeNode* Solution::lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q)
-{
-    if (root == nullptr) {
-        return root;
-    }
+// TreeNode* Solution::lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q)
+// {
+//     if (root == nullptr) {
+//         return root;
+//     }
 
-    if (root == p || root == q) {
-        return root;
-    }
+//     if (root == p || root == q) {
+//         return root;
+//     }
 
-    TreeNode* left = lowestCommonAncestor(root->left, p, q);
-    TreeNode* right = lowestCommonAncestor(root->right, p, q);
+//     TreeNode* left = lowestCommonAncestor(root->left, p, q);
+//     TreeNode* right = lowestCommonAncestor(root->right, p, q);
 
-    if (left != nullptr && right != nullptr) {
-        return root;
-    }
-    if (left != nullptr){
-        return left;
-    }
+//     if (left != nullptr && right != nullptr) {
+//         return root;
+//     }
+//     if (left != nullptr){
+//         return left;
+//     }
 
-    if (right != nullptr) {
-        return right;
-    }
+//     if (right != nullptr) {
+//         return right;
+//     }
 
-    return nullptr;
-}
+//     return nullptr;
+// }
 
-using namespace std;
-vector<vector<int>> levelOrder(TreeNode* root) 
-{
-    vector<vector<int>> result;
-    if (root == nullptr) {
-        return result;
-    }
+// using namespace std;
+// vector<vector<int>> levelOrder(TreeNode* root) 
+// {
+//     vector<vector<int>> result;
+//     if (root == nullptr) {
+//         return result;
+//     }
 
-    queue<TreeNode*> qu;
-    qu.push(root);
-    while (!qu.empty()) {
-        int len = qu.size();
-        vector<int> tempVec;
-        tempVec.resize(len);
-        for (int i = 0; i < len; i++) {
-            TreeNode* temp = qu.front();
-            qu.pop();
-            tempVec[i] = temp->val;
-            if (temp->left != nullptr) {
-                qu.push(temp->left);
-            }
-            if (temp->right != nullptr) {
-                qu.push(temp->right);
-            }
-        }
-        result.push_back(tempVec);
-    }
-    return result;
-}
+//     queue<TreeNode*> qu;
+//     qu.push(root);
+//     while (!qu.empty()) {
+//         int len = qu.size();
+//         vector<int> tempVec;
+//         tempVec.resize(len);
+//         for (int i = 0; i < len; i++) {
+//             TreeNode* temp = qu.front();
+//             qu.pop();
+//             tempVec[i] = temp->val;
+//             if (temp->left != nullptr) {
+//                 qu.push(temp->left);
+//             }
+//             if (temp->right != nullptr) {
+//                 qu.push(temp->right);
+//             }
+//         }
+//         result.push_back(tempVec);
+//     }
+//     return result;
+// }
 
-vector<vector<int>> levelOrderBottom(TreeNode* root) 
-{
-    vector<vector<int>> result;
-    stack<vector<int>> temResult;
-    if(root == nullptr) {
-        return result;
-    }
-    queue<TreeNode*> qu;
-    qu.push(root);
-    while (!qu.empty()) {
-        int len = qu.size();
-        vector<int> tempVec;
-        for (int i = 0; i < len; i++) {
-            TreeNode* tempNode = qu.front();
-            qu.pop();
-            tempVec.push_back(tempNode->val);
-            if (tempNode->left != nullptr) {
-                qu.push(tempNode->left);
-            }
-            if (tempNode->right != nullptr) {
-                qu.push(tempNode->right);
-            }
-        }
-        temResult.push(tempVec);
-    }
-    while (!temResult.empty()) {
-        result.push_back(temResult.top());
-        temResult.pop();
-    }
-    return result;
-}
+// vector<vector<int>> levelOrderBottom(TreeNode* root) 
+// {
+//     vector<vector<int>> result;
+//     stack<vector<int>> temResult;
+//     if(root == nullptr) {
+//         return result;
+//     }
+//     queue<TreeNode*> qu;
+//     qu.push(root);
+//     while (!qu.empty()) {
+//         int len = qu.size();
+//         vector<int> tempVec;
+//         for (int i = 0; i < len; i++) {
+//             TreeNode* tempNode = qu.front();
+//             qu.pop();
+//             tempVec.push_back(tempNode->val);
+//             if (tempNode->left != nullptr) {
+//                 qu.push(tempNode->left);
+//             }
+//             if (tempNode->right != nullptr) {
+//                 qu.push(tempNode->right);
+//             }
+//         }
+//         temResult.push(tempVec);
+//     }
+//     while (!temResult.empty()) {
+//         result.push_back(temResult.top());
+//         temResult.pop();
+//     }
+//     return result;
+// }
 
-vector<vector<int>> zigzagLevelOrder(TreeNode* root) 
-{
-    vector<vector<int>> result;
-    queue<TreeNode*> qu;
-    int level = 0;
-    if (root == nullptr) {
-        return result;
-    }
-    qu.push(root);
-    while(!qu.empty()) {
-        int len = qu.size();
-        vector<int> tempVec;
-        for (int i = 0; i < len; i++) {
-            TreeNode* tempNode = qu.front();
-            qu.pop();
-            if (level % 2 == 0) {
-                tempVec.push_back(tempNode->val);
-            } else {
-                 tempVec.insert(tempVec.begin(), tempNode->val);
-            }
+// vector<vector<int>> zigzagLevelOrder(TreeNode* root) 
+// {
+//     vector<vector<int>> result;
+//     queue<TreeNode*> qu;
+//     int level = 0;
+//     if (root == nullptr) {
+//         return result;
+//     }
+//     qu.push(root);
+//     while(!qu.empty()) {
+//         int len = qu.size();
+//         vector<int> tempVec;
+//         for (int i = 0; i < len; i++) {
+//             TreeNode* tempNode = qu.front();
+//             qu.pop();
+//             if (level % 2 == 0) {
+//                 tempVec.push_back(tempNode->val);
+//             } else {
+//                  tempVec.insert(tempVec.begin(), tempNode->val);
+//             }
 
-            TreeNode* left = tempNode->left;
-            if (left != nullptr) {
-                qu.push(left);
-            }
-            TreeNode* right = tempNode->right;
-            if (right != nullptr) {
-                qu.push(right);
-            }
-        }
-        result.push_back(tempVec);
-        level++;
-    }
-    return result;
-}
+//             TreeNode* left = tempNode->left;
+//             if (left != nullptr) {
+//                 qu.push(left);
+//             }
+//             TreeNode* right = tempNode->right;
+//             if (right != nullptr) {
+//                 qu.push(right);
+//             }
+//         }
+//         result.push_back(tempVec);
+//         level++;
+//     }
+//     return result;
+// }
 
-bool Solution::isValidBST(TreeNode* root) 
-{
-    if (root == nullptr) {
-        return true;
-    }
-    stack<TreeNode*> st;
-    long flag = std::numeric_limits<long>::min();
-    while (root != nullptr || !st.empty()) {
-        while(root!= nullptr) {
-            st.push(root);
-            root = root->left;
-        }
-        TreeNode* temp = st.top();
-        st.pop();
-        if (temp->val <= flag) {
-            return false;
-        }
-        flag = temp->val;
-        root = temp->right;
-    }
-    return true;
-}
+// bool Solution::isValidBST(TreeNode* root) 
+// {
+//     if (root == nullptr) {
+//         return true;
+//     }
+//     stack<TreeNode*> st;
+//     long flag = std::numeric_limits<long>::min();
+//     while (root != nullptr || !st.empty()) {
+//         while(root!= nullptr) {
+//             st.push(root);
+//             root = root->left;
+//         }
+//         TreeNode* temp = st.top();
+//         st.pop();
+//         if (temp->val <= flag) {
+//             return false;
+//         }
+//         flag = temp->val;
+//         root = temp->right;
+//     }
+//     return true;
+// }
 
-bool helpBST(TreeNode* root, long lower, long upper) {
-    if (root == nullptr) {
-        return true;
-    }
-    if (root->val <= lower || root->val >= upper) {
-        return false;
-    }
-    return helpBST(root->left, lower, root->val) && helpBST(root->right, root->val, upper);
-}
+// bool helpBST(TreeNode* root, long lower, long upper) {
+//     if (root == nullptr) {
+//         return true;
+//     }
+//     if (root->val <= lower || root->val >= upper) {
+//         return false;
+//     }
+//     return helpBST(root->left, lower, root->val) && helpBST(root->right, root->val, upper);
+// }
 
-TreeNode* insertIntoBST(TreeNode* root, int val) 
-{
-    if (root == nullptr) {
-        return new TreeNode(val);
-    }
-    TreeNode* head = root;
-    while (root) {
-        if (val < root->val) {
-            if (root->left == nullptr) {
-                root->left = new TreeNode(val);
-                return head;
-            }else {
-                root = root->left;
-            }
-        } else {
-            if (root->right == nullptr) {
-                root->right = new TreeNode(val);
-                return head;
-            } else {
-                root = root->right;
-            }
-        }
-    }
-    return head;
-}
+// TreeNode* insertIntoBST(TreeNode* root, int val) 
+// {
+//     if (root == nullptr) {
+//         return new TreeNode(val);
+//     }
+//     TreeNode* head = root;
+//     while (root) {
+//         if (val < root->val) {
+//             if (root->left == nullptr) {
+//                 root->left = new TreeNode(val);
+//                 return head;
+//             }else {
+//                 root = root->left;
+//             }
+//         } else {
+//             if (root->right == nullptr) {
+//                 root->right = new TreeNode(val);
+//                 return head;
+//             } else {
+//                 root = root->right;
+//             }
+//         }
+//     }
+//     return head;
+// }
