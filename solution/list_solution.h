@@ -17,4 +17,7 @@ class ListSolution
     ListNode* mergeTwoLists(ListNode* l1, ListNode* l2);
     ListNode* partition(ListNode* head, int x);
     ListNode* sortList(ListNode* head);
+    void reorderList(ListNode* head);
+    bool hasCycle(ListNode *head);
+    ListNode *detectCycle(ListNode *head);
 };

@@ -192,3 +192,98 @@ ListNode* ListSolution::sortList(ListNode* head)
 {
     return mergeSort(head);
 }
+
+ListNode* middleNode(ListNode* head)
+{
+    ListNode* slow = head;
+    ListNode* fast = head;
+    while (fast->next != nullptr && fast->next->next != nullptr) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow;
+}
+
+ListNode* reverseList(ListNode* head)
+{
+    ListNode* prev = nullptr;
+    ListNode* curr = head;
+    while (curr != nullptr) {
+        ListNode* temp = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = temp;
+    }
+    return prev;
+}
+
+void mergeLists(ListNode* l1, ListNode* l2)
+{
+    ListNode* l1_temp;
+    ListNode* l2_temp;
+    while (l1 != nullptr && l2 != nullptr) {
+        l1_temp = l1->next;
+        l2_temp = l2->next;
+
+        l1->next = l2;
+        l1 = l1_temp;
+
+        l2->next = l1;
+        l2 = l2_temp;
+    }
+
+}
+
+void ListSolution::reorderList(ListNode* head)
+{
+    if (head == nullptr) {
+        return;
+    }
+    ListNode* mid = middleNode(head);
+    ListNode* l1 = head;
+    ListNode* l2 = mid->next;
+    mid->next = nullptr;
+    l2 = reverseList(l2);
+    mergeLists(l1, l2);
+}
+
+bool ListSolution::hasCycle(ListNode *head)
+{
+    if (head == nullptr || head->next == nullptr) {
+        return false;
+    }
+    ListNode* slow = head;
+    ListNode* fast = head->next;
+
+    while (slow != fast) {
+        if (fast == nullptr || fast->next == nullptr) {
+            return false;
+        }
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return true;
+}
+
+ListNode* ListSolution::detectCycle(ListNode *head)
+{
+    ListNode* slow = head;
+    ListNode* fast = head;
+    while (fast != nullptr) {
+        slow = slow->next;
+        if (fast->next == nullptr) {
+            return nullptr;
+        }
+        fast = fast->next->next;
+        if (fast == slow) {
+            ListNode* pre = head;
+            while (pre != slow) {
+                pre = pre->next;
+                slow = slow->next;
+            }
+            return pre;
+        }
+    }
+    return nullptr;
+}
+
