@@ -287,3 +287,46 @@ ListNode* ListSolution::detectCycle(ListNode *head)
     return nullptr;
 }
 
+bool ListSolution::recursiveCheck(ListNode* curNode)
+{
+    if (curNode != nullptr) {
+        if (!recursiveCheck(curNode->next)) {
+            return false;
+        }
+        if (curNode->val != frontPoint->val)
+        {
+            return false;
+        }
+        frontPoint = frontPoint->next;
+    }
+    return true;
+}
+
+bool ListSolution::isPalindrome(ListNode* head)
+{
+    frontPoint = head;
+    recursiveCheck(head);
+}
+
+Node* ListSolution::copyRandomList(Node* head)
+{
+    if (head == nullptr) {
+        return head;
+    }
+    Node* cur = head;
+    unordered_map<Node*, Node*> map;
+    while (cur != nullptr) {
+        Node* copy = new Node(cur->val);
+        map[cur] = copy;
+        cur = cur->next;
+    }
+    cur = head;
+    while (cur != nullptr) {
+        map[cur]->next = map[cur->next];
+        map[cur]->random = map[cur->random];
+        cur = cur->next;
+
+    }
+    return map[head];
+}
+
